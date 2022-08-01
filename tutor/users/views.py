@@ -1,6 +1,7 @@
+from django.dispatch import receiver
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
+from django.core.mail import send_mail
 from users.models import Student, Tutor
 from .serializers import StudentSerializer, TutorSerializer, UserSerializer, RegisterSerializer
 from django.contrib.auth import get_user_model
@@ -8,6 +9,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
+
+from django_rest_passwordreset.signals import reset_password_token_created
 
 User = get_user_model()
 
@@ -126,3 +129,15 @@ class RegisterTutorAPIView(generics.CreateAPIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
+@receiver(reset_password_token_created)
+def password_reset_token(sender, instance, reset_password_token, *args, **kwargs):
+    message = """
+        Here is your reset password token
+        Token: {0}
+        This is valid for 24 hours only.
+
+        Thank you
+        TAP
+    """.format(reset_password_token.key)
+
+    send_mail('TAP: Reset Password', message, 'tap@gmail.com', [reset_password_token.user,], fail_silently=False)

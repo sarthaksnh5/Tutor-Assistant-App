@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen/RegisterScreen';
+import ResetPasswordScreen from '../screens/ResetPasswordScreen/ResetPasswordScreen';
 import SplashScreen from '../screens/SplashScreen/SplashScreen';
 import BottomTabNavigator from './BottomTabNavigator';
 
@@ -44,6 +45,14 @@ const RootStack = () => {
           }}
           name="Home"
           component={BottomTabNavigator}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+            animation: 'slide_from_right',
+          }}
+          name="ResetPassword"
+          component={ResetPasswordScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

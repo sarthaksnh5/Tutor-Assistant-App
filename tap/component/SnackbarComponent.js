@@ -20,6 +20,7 @@ const SnakbarComponent = ({
           onPress: onPress,
           color: 'white',
         }}
+        duration={2000}
         style={[
           styles.snackBar,
           {backgroundColor: danger ? dangerText : 'green'},

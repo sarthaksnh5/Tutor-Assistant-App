@@ -65,6 +65,8 @@ const LoginScreen = ({navigation}) => {
           setShowSnack(true);
         }
       } catch (e) {
+        setContent('Network Error! Please Try again later.');
+        setShowSnack(true);
         console.log(e);
       }
       setIsLoading(false);
@@ -101,7 +103,7 @@ const LoginScreen = ({navigation}) => {
             secureTextEntry={true}
           />
           <View style={styles.forgotPassword}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.replace('ResetPassword')} >
               <Paragraph>Forgot Password?</Paragraph>
             </TouchableOpacity>
           </View>
